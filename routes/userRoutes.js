@@ -84,6 +84,30 @@ router.get('/profile', async (req, res) => {
       res.status(500).json({ message: 'Server error', error });
     }
   });
+
+  // Update User Profile (only admin can update role)
+router.put('/profile', async (req, res) => {
+    try {
+      const user = await User.findById(req.user._id);
+  
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+  
+      // Update fields if they are provided
+      if (req.body.username) user.username = req.body.username;
+      if (req.body.email) user.email = req.body.email;
+      if (req.body.bio) user.bio = req.body.bio;
+      if (req.body.profile_picture) user.profile_picture = req.body.profile_picture;
+      if (req.body.role && req.user.role === 'admin') user.role = req.body.role; // Allow role update only for admin users
+  
+      await user.save();
+  
+      res.json({ message: 'Profile updated successfully', user });
+    } catch (error) {
+      res.status(500).json({ message: 'Server error', error });
+    }
+  });
   
 
 module.exports = router;
