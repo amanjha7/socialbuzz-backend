@@ -4,22 +4,6 @@ const Comment = require('../models/commentModel');
 const User = require('../models/userModal');
 const router = express.Router();
 
-// // Create a new post
-// router.post('/create', async (req, res) => {
-//   try {
-//     const post = new Post({
-//       content: req.body.content,
-//       author: req.user._id, // Assuming user is authenticated
-//       authorName: req.user.username,
-//     });
-
-//     await post.save();
-//     res.json(post);
-//   } catch (error) {
-//     res.status(500).json({ message: 'Server error', error });
-//   }
-// });
-
 // Create a new post
 router.post('/create', async (req, res) => {
     try {
