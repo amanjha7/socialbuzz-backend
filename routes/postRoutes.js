@@ -135,4 +135,29 @@ router.get('/:postId/comments', async (req, res) => {
     }
   });
 
+  // Delete a post
+router.delete('/:postId', async (req, res) => {
+    try {
+      const post = await Post.findById(req.params.postId);
+      if (!post) return res.status(404).json({ message: 'Post not found' });
+  
+      await post.remove();
+  
+      res.json({ message: 'Post deleted successfully' });
+    } catch (error) {
+      res.status(500).json({ message: 'Server error', error });
+    }
+  });
+
+ // get loggedin user posts
+  router.post('/my-posts', async (req, res) => {
+    try {
+      const user = req.user; // Assuming user is authenticated
+      const posts = await Post.find({ author: user._id });
+      res.json(posts);
+    } catch (error) {
+      res.status(500).json({ message: 'Server error', error });
+    }
+  });
+
 module.exports = router;
