@@ -7,6 +7,12 @@ const router = express.Router();
 // Create a new post
 router.post('/create', async (req, res) => {
     try {
+
+      // if req.hashtags is string convert to array by , or space
+      if(typeof req.body.hashtags === 'string'){
+        req.body.hashtags = req.body.hashtags.split(',').map((tag) => tag.trim());
+      }
+
       const { content, hashtags, image_url } = req.body;
       
       const post = new Post({
