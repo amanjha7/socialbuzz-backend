@@ -26,4 +26,7 @@ router.delete('/:postId', postController.deleteAPost);
 // get loggedin user posts
 router.post('/my-posts', postController.getLoggedInUserPost);
 
+// post of follewed users
+router.post('/followed-posts', postController.getFollowedUsersPosts);
+
 module.exports = router;

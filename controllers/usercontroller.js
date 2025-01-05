@@ -102,5 +102,25 @@ const updateUserProfile = async (req, res) => {
     }
 }
 
-module.exports = { getUserProfile, followAUser, unfollowAUser, getLoggedInUserProfile, updateUserProfile }
+const listFollowers = async (req, res) => {
+    try {
+        const user = await User.findById(req.user._id);
+        const followers = await User.find({ _id: { $in: user.followers } });
+        res.json(followers);
+    } catch (error) {
+        res.status(500).json({ message: 'Server error', error });
+    }
+}
+
+const listFollowing = async (req, res) => {
+    try {
+        const user = await User.findById(req.user._id);
+        const following = await User.find({ _id: { $in: user.following } });
+        res.json(following);
+    } catch (error) {
+        res.status(500).json({ message: 'Server error', error });
+    }
+}
+
+module.exports = { getUserProfile, followAUser, unfollowAUser, getLoggedInUserProfile, updateUserProfile, listFollowers, listFollowing }
 

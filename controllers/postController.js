@@ -151,4 +151,14 @@ const getLoggedInUserPost = async (req, res) => {
     }
 }
 
-module.exports = { createNewPost, getPostFeed, likeAPost, addCommentToPost, showAllPosts, getCommentsForSpecificPost, deleteAPost, getLoggedInUserPost }
+const getFollowedUsersPosts = async (req, res) => {
+    try {
+        const user = req.user; // Assuming user is authenticated
+        const posts = await Post.find({ author: { $in: user.following } });
+        res.json(posts);
+    } catch (error) {
+        res.status(500).json({ message: 'Server error', error });
+    }
+}
+
+module.exports = { createNewPost, getPostFeed, likeAPost, addCommentToPost, showAllPosts, getCommentsForSpecificPost, deleteAPost, getLoggedInUserPost, getFollowedUsersPosts }

@@ -18,5 +18,10 @@ router.get('/profile', userController.getLoggedInUserProfile);
 // Update User Profile (only admin can update role)
 router.put('/profile', userController.updateUserProfile);
 
+// list followers
+router.post('/followers', userController.listFollowers);
+
+// list follwing
+router.post('/following', userController.listFollowing);
 
 module.exports = router;
